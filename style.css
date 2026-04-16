@@ -1,110 +1,199 @@
+
 :root {
-    --primary: #4f46e5;
-    --bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --high-priority: #ef4444;
+    --indigo: #6366f1;
+    --midnight: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --border: #334155;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
 body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background-color: var(--bg);
-    display: flex;
-    justify-content: center;
-    padding: 40px 20px;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    background-color: var(--midnight); /* Dark Background */
     color: var(--text-main);
+    line-height: 1.5;
 }
 
-.container { 
-    width: 100%; 
-    max-width: 450px; 
+/* Centering Wrapper */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* Padding for small screens */
 }
 
 .todo-card {
     background: var(--card-bg);
-    border-radius: 12px;
+    width: 100%;
+    max-width: 450px;
+    min-width: 260px; /* Forces safety for 298px */
     padding: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    border-top: 6px solid var(--border);
+    transition: all 0.3s ease;
+    overflow: hidden; /* Prevents internal children from leaking out */
 }
 
-.todo-card.completed {
-    opacity: 0.7;
-    background: #f1f5f9;
-}
+/* Priority Accent Colors */
+.todo-card[data-priority="High"] { border-top-color: var(--danger); }
+.todo-card[data-priority="Medium"] { border-top-color: var(--warning); }
+.todo-card[data-priority="Low"] { border-top-color: var(--success); }
 
-.todo-card.completed h2 {
-    text-decoration: line-through;
-    color: var(--text-muted);
-}
+.hidden { display: none !important; }
 
-h2 { 
-    margin: 0 0 8px 0; 
-    font-size: 1.25rem; 
-}
-
-p { 
-    color: var(--text-muted); 
-    font-size: 0.9rem; 
-    margin-bottom: 20px; 
-}
-
-.info-row {
+/* Header & Checkbox Area */
+.card-top {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 0.85rem;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
-.priority-high {
-    color: var(--high-priority);
-    font-weight: bold;
+#status-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+#display-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    flex: 1;
+    word-break: break-word; /* Prevents overflow at 298px */
+}
+
+.priority-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--border);
     text-transform: uppercase;
 }
 
-.tags-container {
-    display: flex;
-    gap: 8px;
-    margin-top: 15px;
-    flex-wrap: wrap;
+/* Description & Expand Toggle */
+.collapsed {
+    max-height: 3.6em; /* Roughly 2 lines */
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    position: relative;
 }
 
-.tag {
-    background: #e2e8f0;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-}
-
-.card-footer {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.actions button {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    background: white;
+#expand-btn {
+    background: none;
+    border: none;
+    color: var(--indigo);
+    font-weight: 600;
     cursor: pointer;
-    margin-left: 5px;
+    font-size: 0.85rem;
+    margin: 8px 0 20px 0;
 }
 
-.btn-delete:hover { 
-    background: #fee2e2; 
-    color: #ef4444; 
+/* Info Section (Status & Timer) */
+.card-details {
+    display: flex;
+    flex-wrap: wrap; /* CRITICAL for 298px */
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
 }
 
-/* Responsive */
+.status-box label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.status-box select {
+    background: var(--midnight);
+    color: white;
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.timer-box {
+    text-align: right;
+    min-width: 120px;
+}
+
+#timer-display {
+    font-weight: 700;
+    display: block;
+}
+
+.overdue-accent { color: var(--danger); }
+
+/* Buttons */
+#edit-btn, .primary-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 12px;
+    background: var(--indigo);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.secondary-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Edit Mode Layout */
+.form-title { margin-bottom: 16px; font-size: 1.1rem; }
+.field { margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+.field label { font-size: 0.85rem; color: var(--text-muted); }
+
+.field input, .field textarea, .field select {
+    background: var(--midnight);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* ULTRA RESPONSIVE TWEAKS */
 @media (max-width: 400px) {
-    .card-footer { 
-        flex-direction: column; 
-        gap: 15px; align-items: 
-        flex-start; 
-    }
+    .row { grid-template-columns: 1fr; } /* Stacks inputs on mobile */
+    .card-details { flex-direction: column; } /* Stacks status/timer */
+    .timer-box { text-align: left; }
+    .todo-card { padding: 16px; } /* More space inside on tiny screens */
+}
+
+/* Completion Style */
+.is-done #display-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
 }

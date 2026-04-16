@@ -3,55 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HNG Stage 0 - Todo Card</title>
+    <title>Prince_dev | HNG Stage 1</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="container">
-        <article class="todo-card" data-testid="test-todo-card">
+    <main class="page-wrapper">
+        <article class="todo-card" id="todo-card" data-testid="test-todo-priority-indicator">
             
-            <div class="card-header">
-                <div class="title-section">
-                    <h2 data-testid="test-todo-title">Create comprehensive wireframe</h2>
-                    <p data-testid="test-todo-description">Discuss with UX Designer to develop the concept into effective wireframes.</p>
-                </div>
-                <div class="status-badge" data-testid="test-todo-status">Pending</div>
-            </div>
-
-            <div class="card-body">
-                <div class="info-row">
-                    <span class="label">Priority:</span>
-                    <span class="priority-high" data-testid="test-todo-priority">High</span>
+            <div id="view-mode">
+                <div class="card-top">
+                    <input type="checkbox" data-testid="test-todo-checkbox" id="status-checkbox">
+                    <h2 data-testid="test-todo-title" id="display-title">Stage 1 Task</h2>
+                    <span id="priority-label" class="priority-badge">High</span>
                 </div>
 
-                <div class="info-row">
-                    <span class="label">Due:</span>
-                    <time datetime="2026-04-16" data-testid="test-todo-due-date">Due Apr 16, 2026</time>
+                <div data-testid="test-todo-collapsible-section" id="collapsible-section" class="collapsed">
+                    <p data-testid="test-todo-description" id="display-description">
+                        This is the task description. If it exceeds a certain length, the expand toggle will activate, allowing the user to view more or less content per Stage 1 requirements.
+                    </p>
+                </div>
+                <button data-testid="test-todo-expand-toggle" id="expand-btn" aria-expanded="false" aria-controls="collapsible-section">Show More</button>
+
+                <div class="card-details">
+                    <div class="status-box">
+                        <label for="status-control">Status</label>
+                        <select data-testid="test-todo-status-control" id="status-control">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="timer-box" aria-live="polite">
+                        <span data-testid="test-todo-timer" id="timer-display">Syncing...</span>
+                        <span data-testid="test-todo-overdue-indicator" id="overdue-indicator" class="hidden">OVERDUE</span>
+                    </div>
                 </div>
 
-                <div class="info-row">
-                    <span class="label">Time Left:</span>
-                    <span data-testid="test-todo-time-remaining" class="time-remaining">Calculating...</span>
-                </div>
-
-                <div class="tags-container" data-testid="test-todo-tags">
-                    <span class="tag" data-testid="test-todo-tag-work">Work</span>
-                    <span class="tag" data-testid="test-todo-tag-urgent">Urgent</span>
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <label class="toggle-container">
-                    <input type="checkbox" data-testid="test-todo-complete-toggle" id="complete-toggle">
-                    <span class="toggle-text">Mark as Done</span>
-                </label>
-
-                <div class="actions">
-                    <button class="btn-edit" data-testid="test-todo-edit-button" aria-label="Edit Task">Edit</button>
-                    <button class="btn-delete" data-testid="test-todo-delete-button" aria-label="Delete Task">Delete</button>
+                <div class="card-actions">
+                    <button id="edit-btn" data-testid="test-todo-edit-button">Edit Task</button>
                 </div>
             </div>
+
+            <form data-testid="test-todo-edit-form" id="edit-form" class="hidden">
+                <h3 class="form-title">Edit Todo-Card</h3>
+                
+                <div class="field">
+                    <label for="edit-title">Task Title</label>
+                    <input type="text" id="edit-title" data-testid="test-todo-edit-title-input" required>
+                </div>
+
+                <div class="field">
+                    <label for="edit-description">Description</label>
+                    <textarea id="edit-description" data-testid="test-todo-edit-description-input" rows="3"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="edit-priority">Priority</label>
+                        <select id="edit-priority" data-testid="test-todo-edit-priority-select">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="edit-due-date">Due Date</label>
+                        <input type="datetime-local" id="edit-due-date" data-testid="test-todo-edit-due-date-input">
+                    </div>
+                </div>
+
+                <div class="form-btns">
+                    <button type="button" id="save-btn" data-testid="test-todo-save-button" class="primary-btn">Save Changes</button>
+                    <button type="button" id="cancel-btn" data-testid="test-todo-cancel-button" class="secondary-btn">Cancel</button>
+                </div>
+            </form>
+
         </article>
     </main>
 
